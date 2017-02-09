@@ -6,6 +6,8 @@
 namespace SnapScan\Handlers;
 
 use SnapScan\Config;
+use SnapScan\Handlers\Response\CashupResponse;
+use SnapScan\Handlers\Response\CashupsResponse;
 use SnapScan\Handlers\Response\PaymentsResponse;
 use SnapScan\Models\QRCode;
 use SnapScan\Utils\Constants;
@@ -137,6 +139,36 @@ class SnapScan
             $this->getConfig()->getSinglePaymentEndpoint($paymentId),
             null,
             PaymentsResponse::class
+        );
+    }
+
+    public function getCashupPayments($reference)
+    {
+        return $this->getRequestHandler()->doRequest(
+            Constants::HTTP_METHOD_GET,
+            $this->getConfig()->getPaymentsCashupEndpoint($reference),
+            null,
+            PaymentsResponse::class
+        );
+    }
+
+    public function createCashupPeriod()
+    {
+        return $this->getRequestHandler()->doRequest(
+            Constants::HTTP_METHOD_POST,
+            $this->getConfig()->getCashupsEndpoint(),
+            null,
+            CashupResponse::class
+        );
+    }
+
+    public function getCashups()
+    {
+        return $this->getRequestHandler()->doRequest(
+            Constants::HTTP_METHOD_GET,
+            $this->getConfig()->getCashupsEndpoint(),
+            null,
+            CashupsResponse::class
         );
     }
 

@@ -126,12 +126,18 @@ class Config
         return sprintf("{$this->getPaymentsEndpoint()}/%s", $paymentId);
     }
 
+
+    public function getCashupsEndpoint()
+    {
+        return "{$this->getMerchantEndpoint()}/cash_ups";
+    }
+
     /**
      * @param $reference
      *
      * @return string
      */
-    public function getCashupEndpoint($reference)
+    public function getPaymentsCashupEndpoint($reference)
     {
         return sprintf("{$this->getPaymentsEndpoint()}/cash_ups/%s",$reference);
     }

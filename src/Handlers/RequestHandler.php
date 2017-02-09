@@ -68,10 +68,6 @@ class RequestHandler
                     break;
             }
 
-            if($response->getStatusCode() != 200) {
-             //   throw new RequestException('Error occurred calling SnapScan API');
-            }
-
             $responseContent = $response->json();
             if(empty($responseClassMapping)) {
                 return $responseContent;
@@ -86,11 +82,6 @@ class RequestHandler
         } catch (Exception $e) {
 
         }
-
-
-
-
-
     }
 
 

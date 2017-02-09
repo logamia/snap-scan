@@ -13,7 +13,8 @@
     "require": {
         "php" : ">=5.5.0",
         "endroid/qrcode": "^1.9",
-        "guzzlehttp/guzzle": "5.2.0"
+        "guzzlehttp/guzzle": "5.2.0",
+        "nesbot/Carbon": "~1.21"
     },
     "autoload": {
         "psr-4": {

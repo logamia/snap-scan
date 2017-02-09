@@ -6,8 +6,6 @@
 namespace SnapScan\Handlers\Response;
 
 
-use GuzzleHttp\Message\Response;
-
 class ErrorResponse extends BaseResponse
 {
     /**
@@ -20,21 +18,12 @@ class ErrorResponse extends BaseResponse
      */
     protected $reasonPhrase;
 
-    public function __construct(Response $response)
-    {
-        parent::__construct($response);
-        $this->setReasonPhrase($response->getReasonPhrase());
-    }
-
     /**
      * @return string
      */
     public function getMessage()
     {
-        if(!empty($this->getResponseBody()['message'])) {
-            return $this->message;
-        }
-        return null;
+        return $this->message;
     }
 
     /**
@@ -52,5 +41,14 @@ class ErrorResponse extends BaseResponse
     {
         $this->reasonPhrase = $reasonPhrase;
     }
+
+    public function toArray()
+    {
+        return [
+            'message'      => $this->getMessage(),
+            'reasonPhrase' => $this->getReasonPhrase(),
+        ];
+    }
+
 
 }

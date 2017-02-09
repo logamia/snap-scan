@@ -5,8 +5,6 @@
 
 namespace SnapScan\Handlers\Response;
 
-use GuzzleHttp\Message\Response;
-
 class PaymentsResponse extends BaseResponse
 {
 
@@ -15,20 +13,11 @@ class PaymentsResponse extends BaseResponse
      */
     protected $payments;
 
-    public function __construct(Response $response)
+    public function setData(array $data)
     {
-        parent::__construct($response);
-
-        $data = $this->getResponseBody();
-        if(!is_array($data)) {
-            $data = json_decode($data, true);
-        }
-
-
         foreach ($data as $payment) {
             $this->addPayment($payment);
         }
-
     }
 
     /**
@@ -52,8 +41,10 @@ class PaymentsResponse extends BaseResponse
         $paymentResponse = new PaymentResponse($this->getResponse(), false);
         $paymentResponse->setData($payment);
 
+        if(isset($this->payments[$paymentResponse->getId()])) {
+            return;
+        }
         $this->payments[$paymentResponse->getId()] = $paymentResponse;
-        $this->payments = array_unique($this->payments);
     }
 
     public function toArray()

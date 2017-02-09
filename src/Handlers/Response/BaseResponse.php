@@ -6,6 +6,7 @@
 namespace SnapScan\Handlers\Response;
 
 
+use Carbon\Carbon;
 use GuzzleHttp\Message\Response;
 
 abstract class BaseResponse
@@ -26,11 +27,33 @@ abstract class BaseResponse
     protected $response;
 
 
-    public function __construct(Response $response)
+    public function __construct(Response $response, $setData = true)
     {
         $this->setResponse($response);
         $this->setStatusCode($response->getStatusCode());
         $this->setResponseBody($response->json());
+
+        $data = $this->getResponseBody();
+
+        if(!$setData) {
+            return true;
+        }
+
+        if(!is_array($data)) {
+            $data = json_decode($data, true);
+        }
+
+        $this->setData($data);
+    }
+
+    public function setData(array $data)
+    {
+        foreach ($data as $property => $value) {
+            if(!property_exists($this, $property)) {
+                continue;
+            }
+            $this->$property = $value;
+        }
     }
 
     /**
@@ -79,6 +102,12 @@ abstract class BaseResponse
     public function setResponse($response)
     {
         $this->response = $response;
+    }
+
+    public function getFormattedDate($date, $format = 'Y-m-d H:i:s')
+    {
+        $date = Carbon::parse($date);
+        return $date->format($format);
     }
 
     abstract public function toArray();

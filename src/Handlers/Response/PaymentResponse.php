@@ -20,7 +20,7 @@ class PaymentResponse extends BaseResponse
     protected $status;
 
     /**
-     * @var \DateTime
+     * @var string
      */
     protected $date;
 
@@ -79,32 +79,6 @@ class PaymentResponse extends BaseResponse
      */
     protected $deliveryAddress;
 
-    public function __construct(Response $response, $setData = true)
-    {
-        parent::__construct($response);
-        $data = $this->getResponseBody();
-
-        if(!$setData) {
-            return true;
-        }
-
-        if(!is_array($data)) {
-            $data = json_decode($data, true);
-        }
-
-        $this->setData($data);
-    }
-
-    public function setData(array $data)
-    {
-        foreach ($data as $property => $value) {
-            if(!property_exists($this, $property)) {
-                continue;
-            }
-            $this->$property = $value;
-        }
-    }
-
     /**
      * @return int
      */
@@ -138,15 +112,15 @@ class PaymentResponse extends BaseResponse
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getDate()
     {
-        return $this->date;
+        return $this->getFormattedDate($this->date);
     }
 
     /**
-     * @param \DateTime $date
+     * @param string $date
      */
     public function setDate($date)
     {
@@ -337,7 +311,7 @@ class PaymentResponse extends BaseResponse
             'status' => $this->getStatus(),
             'date' => $this->getDate(),
             'totalAmount' => $this->getTotalAmount(),
-            'idtipAmount' => $this->getTipAmount()
+            'tipAmount' => $this->getTipAmount()
         ];
     }
 
