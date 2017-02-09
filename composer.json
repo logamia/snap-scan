@@ -1,0 +1,23 @@
+{
+    "name": "glowtech/snapscan",
+    "description": "Easy to you SnapScan library",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gavin Schreiber",
+            "email": "gavin@s-aint.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php" : ">=5.5.0",
+        "endroid/qrcode": "^1.9",
+        "guzzlehttp/guzzle": "5.2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SnapScan\\": "src/"
+        }
+    }
+}
